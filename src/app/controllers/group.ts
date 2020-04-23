@@ -24,7 +24,6 @@ export const show = async (req: Request, res: Response) => {
 export const create = async (req: Request, res: Response) => {
   try {
     const group: Group = {
-      id: req.body.id,
       name: req.body.name,
       description: req.body.description,
       location: req.body.location,
@@ -58,7 +57,6 @@ export const update = async (req: Request, res: Response) => {
   try {
     if(group) {
     const newGroup: Group ={
-      id: req.body.id,
       name: req.body.name,
       description: req.body.description,
       location: req.body.location,

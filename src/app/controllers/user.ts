@@ -27,7 +27,8 @@ export const create = async (req: Request, res: Response) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      age: req.body.age
+      age: req.body.age,
+      groupID: req.body.groupID
     }
     await database('users').insert(user);
     res.sendStatus(200);
@@ -45,7 +46,8 @@ export const update = async (req: Request, res: Response) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      age: req.body.age
+      age: req.body.age,
+      groupID: req.body.groupID
   }
   await database('users').update(newUser).where({id: req.params.id});
   res.sendStatus(201);

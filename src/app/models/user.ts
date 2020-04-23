@@ -6,5 +6,6 @@ export interface User {
   age: number;
   created_at?: string;
   updated_at?: string;
+  groupID: number;
 };
 

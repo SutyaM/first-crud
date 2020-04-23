@@ -1,7 +1,7 @@
 
 exports.up = (knex) => {
   return knex.schema.createTable('groups', (table) => {
-    table.string('id');
+    table.increments();
     table.string('name');
     table.string('description');
     table.string('location');
