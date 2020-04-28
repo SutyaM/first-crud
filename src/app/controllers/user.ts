@@ -1,6 +1,7 @@
 import {User} from '../models/user';
 import {database} from '../../lib/database';
 import { Request, Response} from 'express';
+import * as userSerializer from '../serializers/user';
 
 export const index = async (req: Request, res: Response) => {
   const users: Array<User> = await database('users').select();
@@ -11,7 +12,7 @@ export const show = async (req: Request, res: Response) => {
   try {
     const user: User = await database('users').select().where({id: req.params.id}).first();
     if (user) {
-    res.json(user);
+    res.json(userSerializer.show(user));
     } else {
       res.sendStatus(404);
     }
