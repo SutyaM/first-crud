@@ -1,18 +1,16 @@
 import { User } from "../models/user";
 import { database } from "../../lib/database";
 import { Request, Response } from "express";
-import * as userSerializer from '../serializers/user';
-import * as bcrypt from "bcrypt";
+import * as userSerializer from '../serializers/user'
 
 export const index = async (req: Request, res: Response) => {
-  const users: Array<User> = await database('users').select();
-  res.json(userSerializer.index(users));
+  const users: Array<User> = await database('users').where({ groupId: req.params.groupId }).select();
+  res.json(users);
 };
 
 export const show = async (req: Request, res: Response) => {
   try {
-    const user: User = await database('users').select().where({ id: req.params.id }).first();
-    console.log(user);
+    const user: User = await database('users').select().where({ groupId: req.params.groupId, id: req.params.id }).first();
     if (typeof user !== 'undefined') {
       res.json(userSerializer.show(user));
     } else {
@@ -26,15 +24,12 @@ export const show = async (req: Request, res: Response) => {
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const encryptedPassword = bcrypt.hashSync(req.body.password, 10);
     const user: User = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       age: req.body.age,
-      groupID: req.body.groupID,
-      role: req.body.role,
-      password: encryptedPassword
+      groupID: Number(req.params.groupID)
     }
     await database('users').insert(user);
     res.sendStatus(201);
@@ -46,16 +41,15 @@ export const create = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
   try {
-    const user: User = await database('users').select().where({ id: req.params.id }).first();
+    const user: User = await database('users').select().where({ groupId: req.params.groupId, id: req.params.id }).first();
     if (user) {
       const newUser: User = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        age: req.body.age,
-        groupID: req.body.groupID
+        age: req.body.age
       }
-      await database('users').update(newUser).where({ id: req.params.id });
+      await database('users').update(newUser).where({ groupId: req.params.groupId, id: req.params.id });
       res.sendStatus(200);
     } else {
       res.sendStatus(404);
@@ -68,9 +62,9 @@ export const update = async (req: Request, res: Response) => {
 
 export const destroy = async (req: Request, res: Response) => {
   try {
-    const user: User = await database('users').select().where({ id: req.params.id }).first();
+    const user: User = await database('users').select().where({ groupId: req.params.groupId, id: req.params.id }).first();
     if (user) {
-      await database('users').delete().where({ id: req.params.id });
+      await database('users').delete().where({ groupId: req.params.groupId, id: req.params.id });
       res.sendStatus(204);
     } else {
       res.sendStatus(404);

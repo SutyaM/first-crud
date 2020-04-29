@@ -1,7 +1,7 @@
 export interface Category {
   id?: number;
   name: string;
-  status: 'important' | 'freetime' | 'family';
-  updated_at?: string;
+  status: "important" | "free-time" | "family";
   created_at?: string;
-};
+  updated_at?: string;
+}
