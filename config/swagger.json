@@ -182,7 +182,7 @@
         }
       }
     },
-    "/group/{id}/user": {
+    "/group/{groupId}/user": {
       "get": {
         "summary": "Get users by group",
         "parameters": [
@@ -211,7 +211,7 @@
         }
       },
       "post": {
-        "summary": "Create user by group",
+        "summary": "Create User into Group",
         "parameters": [
           {
             "in": "header",
@@ -239,9 +239,9 @@
         }
       }
     },
-    "/group/{id}/user/{id}": {
+    "/group/{groupId}/user/{id}": {
       "get": {
-        "summary": "Get user by ID",
+        "summary": "Get User by id from Group",
         "parameters": [
           {
             "in": "header",
@@ -256,14 +256,14 @@
           },
           {
             "in": "path",
-            "name": "userId",
+            "name": "id",
             "type": "string",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "Return with User object",
+            "description": "Return with User object from Group",
             "schema":{
               "$ref": "#definitions/User"
             }
@@ -271,7 +271,7 @@
         }
       },
       "put": {
-        "summary": "Modify user by group",
+        "summary": "Modify User by Group",
         "parameters": [
           {
             "in": "header",
